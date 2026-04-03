@@ -1,3 +1,3 @@
 <?php
 
-echo 'Bem vindo ao Focca - Via GIT';
+echo 'Bem vindo ao Focca - Via GITT';
