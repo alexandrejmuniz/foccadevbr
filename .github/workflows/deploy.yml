@@ -2,18 +2,29 @@ name: Deploy FTP focca.dev.br
 
 on:
   push:
-    branches: [ "main" ]
-
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
   deploy:
-    name: Deploy site estático
+    name: Build e deploy do /dist
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar build
+        run: npm run build
 
       - name: Upload via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -21,6 +32,7 @@ jobs:
           server: ${{ vars.HOST }}
           username: ${{ vars.USER }}
           password: ${{ secrets.PASS }}
+          local-dir: ./dist/
           server-dir: ${{ vars.REMOTEDIR }}
           exclude: |
             **/.git*
