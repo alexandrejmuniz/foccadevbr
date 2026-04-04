@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timeline - Fadestocodes Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #f5ecde;
+      --muted: #b8b9c7;
+      --line: #2e54d1;
+      --line-soft: rgba(46, 84, 209, 0.28);
+      --card: rgba(10, 15, 31, 0.86);
+      --border: rgba(245, 236, 222, 0.14);
+      --shadow: 0 22px 54px rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Archivo", sans-serif;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(46, 84, 209, 0.25), transparent 42%),
+        radial-gradient(circle at 84% 4%, rgba(134, 164, 255, 0.2), transparent 36%),
+        linear-gradient(170deg, #090d19 0%, #0a1022 52%, #090d19 100%);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 4.8rem 1.2rem 6rem;
+      position: relative;
+    }
+
+    .title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2rem, 5vw, 4.3rem);
+      letter-spacing: -0.035em;
+      line-height: 0.95;
+      max-width: 780px;
+      margin-bottom: 0.8rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      max-width: 730px;
+      margin-bottom: 2.8rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 0.8rem 0 3rem;
+    }
+
+    .timeline-visual {
+      position: absolute;
+      left: 50%;
+      top: 1.2rem;
+      transform: translateX(-50%);
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.94;
+    }
+
+    #svg-stage {
+      width: clamp(240px, 28vw, 360px);
+      height: auto;
+      overflow: visible;
+      display: block;
+    }
+
+    #svg-stage .theLine {
+      stroke: var(--line);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      filter: drop-shadow(0 0 12px rgba(46, 84, 209, 0.55));
+    }
+
+    #svg-stage .ball {
+      fill: #0a1022;
+      stroke: #89a5ff;
+      stroke-width: 4;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    #svg-stage text {
+      fill: #b3c4ff;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .events {
+      position: relative;
+      z-index: 2;
+      padding-top: 0.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .event {
+      width: calc(50% - 7.4rem);
+      padding: 1.2rem 1.3rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(16, 24, 47, 0.82), var(--card));
+      box-shadow: var(--shadow);
+      margin-bottom: 4.6rem;
+      opacity: 0.08;
+      filter: blur(8px);
+      transform: translate3d(0, 40px, 0);
+      transition: transform 0.18s linear, opacity 0.18s linear, filter 0.18s linear, border-color 0.22s linear;
+      will-change: transform, opacity, filter;
+    }
+
+    .event:nth-child(odd) {
+      margin-right: auto;
+      transform: translateX(-34px) translateY(36px);
+      border-left: 3px solid var(--line-soft);
+    }
+
+    .event:nth-child(even) {
+      margin-left: auto;
+      transform: translateX(34px) translateY(36px);
+      border-right: 3px solid var(--line-soft);
+    }
+
+    .year {
+      display: inline-block;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.55rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.7rem;
+      color: #9bb0ff;
+    }
+
+    .description {
+      color: var(--ink);
+      line-height: 1.45;
+      font-size: 1.02rem;
+    }
+
+    .footer-gap {
+      height: 10vh;
+    }
+
+    @media (max-width: 1000px) {
+      .timeline-visual {
+        left: 1.4rem;
+        transform: none;
+      }
+
+      #svg-stage {
+        width: 220px;
+      }
+
+      .events {
+        padding-left: 2.6rem;
+      }
+
+      .event {
+        width: calc(100% - 2.8rem);
+        margin-left: 2.8rem !important;
+        transform: translateY(36px);
+      }
+
+      .event:nth-child(odd),
+      .event:nth-child(even) {
+        transform: translateY(36px);
+        border-left: 3px solid var(--line-soft);
+        border-right: 1px solid var(--border);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <section class="timeline" data-timeline>
+      <div class="timeline-visual" aria-hidden="true">
+        <svg id="svg-stage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 2526.3" class="scale-50 2xl:scale-100 origin-left"><path class="theLine" d="M-5,0c303.3,153.3,405,303.3,305,450s-156.7,246.7-170,300c-20,66.7,36.7,150,170,250,133.3,100,117.4,455-115.9,488.4-88.3,15.5,121,58.8,158.6,80.1s-116.1,19.6-143.8,52.3,90.2,8.2,114.6,32.7-104.8,31.1-77,63.8c27.8,32.7,196.2-1.6,241.9,93.2s-336.7,14-294.2,94.8c45.8,87,287.7,148.8,243.6,299.1S-12.1,2506.7-12.1,2506.7" fill="none" stroke="#000" stroke-width="10" style="stroke-dashoffset: 3923.66; stroke-dasharray: 3923.66;"></path><circle class="ball ball01" cx="50" cy="100" r="20" data-svg-origin="30 80" transform="matrix(1,0,0,1,112.88714,2326.99358)" style="opacity: 1; visibility: inherit;"></circle><circle class="ball ball02" cx="278" cy="201" r="20" data-svg-origin="258 181" transform="matrix(2,0,0,2,-278,-201)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><circle class="ball ball03" cx="327" cy="401" r="20" data-svg-origin="307 381" transform="matrix(2,0,0,2,-327,-401)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><circle class="ball ball04" cx="130.3" cy="799" r="20" data-svg-origin="110.30000305175781 779" transform="matrix(2,0,0,2,-130.3,-799)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><circle class="ball ball05" cx="303.3" cy="1000" r="20" data-svg-origin="283.29998779296875 980" transform="matrix(2,0,0,2,-303.29999,-1000)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><circle class="ball ball06" cx="384" cy="1192.2" r="20" data-svg-origin="364 1172.2000732421875" transform="matrix(2,0,0,2,-384,-1192.20007)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><circle class="ball ball07" cx="333.4" cy="1392.2" r="20" data-svg-origin="313.4000244140625 1372.199951171875" transform="matrix(2,0,0,2,-333.40002,-1392.19995)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><circle class="ball ball08" cx="468.1" cy="1792.2" r="20" data-svg-origin="448.1000061035156 1772.199951171875" transform="matrix(2,0,0,2,-468.10001,-1792.19995)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><circle class="ball ball09" cx="281.8" cy="1992.2" r="20" data-svg-origin="261.8000183105469 1972.2000732421875" transform="matrix(2,0,0,2,-281.80002,-1992.20007)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><circle class="ball ball10" cx="430" cy="2191.1" r="20" data-svg-origin="410 2171.099853515625" transform="matrix(2,0,0,2,-430,-2191.09985)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;"></circle><text class="text01" x="50" y="194.11" data-svg-origin="50 177.74630737304688" transform="matrix(2,0,0,2,-66.16482,-187.74634)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;">2011</text><text class="text02" x="50" y="394.11" data-svg-origin="50 377.7463073730469" transform="matrix(2,0,0,2,-66.16482,-387.74634)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;">2011</text><text class="text03" x="50" y="724.11" data-svg-origin="50 707.7462768554688" transform="matrix(2,0,0,2,-66.2125,-717.74631)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;">2014</text><text class="text04" x="50" y="994.11" data-svg-origin="50 977.7462768554688" transform="matrix(2,0,0,2,-66.16482,-987.74631)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;">2015</text><text class="text05" x="50" y="1186.31" data-svg-origin="50 1169.9462890625" transform="matrix(2,0,0,2,-66.2125,-1179.94632)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;">2016</text><text class="text06" x="50" y="1786.31" data-svg-origin="50 1769.9462890625" transform="matrix(2,0,0,2,-66.16482,-1779.94632)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;">2023</text><text class="text07" x="50" y="1986.31" data-svg-origin="50 1969.9464111328125" transform="matrix(2,0,0,2,-66.2125,-1979.94644)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;">2024</text><text class="text08" x="50" y="2186.81" data-svg-origin="50 2170.4462890625" transform="matrix(2,0,0,2,-66.16482,-2180.44632)" style="transform-origin: 0px 0px; opacity: 1; visibility: inherit;">2025</text></svg>
+      </div>
+
+      <div class="events">
+        <article class="event" data-event>
+          <span class="year">2011</span>
+          <p class="description">Graduated from Burnaby North Secondary with the Honour Cord.</p>
+        </article>
+
+        <article class="event" data-event>
+          <span class="year">2011</span>
+          <p class="description">Went to the University of Toronto for Engineering.</p>
+        </article>
+
+        <article class="event" data-event>
+          <span class="year">2014</span>
+          <p class="description">Completed 2 years, but withdrew from the program after realizing it was not the right path.</p>
+        </article>
+
+        <article class="event" data-event>
+          <span class="year">2015</span>
+          <p class="description">Enrolled and completed the Associates Certificate for Graphic Design at BCIT.</p>
+        </article>
+
+        <article class="event" data-event>
+          <span class="year">2016</span>
+          <p class="description">Entered the world of creative barbering and started building a solid client base.</p>
+        </article>
+
+        <article class="event" data-event>
+          <span class="year">2023</span>
+          <p class="description">Over time, passion faded and growth felt limited, so I started looking for a new direction.</p>
+        </article>
+
+        <article class="event" data-event>
+          <span class="year">2024</span>
+          <p class="description">Explored other paths and pursued cinematography, earning a Best Cinematography nomination.</p>
+        </article>
+
+        <article class="event" data-event>
+          <span class="year">2025</span>
+          <p class="description">Committed to software development, built and launched Bingeable, and kept growing as a builder.</p>
+        </article>
+      </div>
+    </section>
+    <div class="footer-gap"></div>
+  </main>
+
+  <script>
+    (function () {
+      var timeline = document.querySelector("[data-timeline]");
+      var events = Array.prototype.slice.call(document.querySelectorAll("[data-event]"));
+      var svg = document.getElementById("svg-stage");
+      var path = svg ? svg.querySelector(".theLine") : null;
+      if (!timeline || !svg || !path || events.length === 0) return;
+
+      var PATH_MAX_Y = 2526.3;
+      var balls = Array.prototype.slice.call(svg.querySelectorAll(".ball"));
+      var labels = Array.prototype.slice.call(svg.querySelectorAll("text[class^='text']"));
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function easeOutCubic(value) {
+        var x = clamp(value, 0, 1);
+        return 1 - Math.pow(1 - x, 3);
+      }
+
+      function clearRuntimeAttributes(node) {
+        if (node.hasAttribute("transform")) node.removeAttribute("transform");
+        if (node.hasAttribute("data-svg-origin")) node.removeAttribute("data-svg-origin");
+        if (node.hasAttribute("style")) node.removeAttribute("style");
+        node.style.opacity = "0";
+      }
+
+      balls.forEach(clearRuntimeAttributes);
+      labels.forEach(clearRuntimeAttributes);
+
+      var pathLength = path.getTotalLength();
+      path.style.strokeDasharray = pathLength.toFixed(2);
+      path.style.strokeDashoffset = pathLength.toFixed(2);
+
+      function revealSvgNode(node, ratio, yAttr, leadOffset) {
+        var rawY = parseFloat(node.getAttribute(yAttr));
+        var y = isNaN(rawY) ? 0 : rawY;
+        var threshold = clamp((y / PATH_MAX_Y) - leadOffset, 0, 1);
+        var local = clamp((ratio - threshold) / 0.12, 0, 1);
+        var eased = easeOutCubic(local);
+        node.style.opacity = (0.06 + eased * 0.94).toFixed(3);
+
+        if (node.classList.contains("ball")) {
+          var scale = 0.7 + eased * 0.3;
+          node.style.transform = "scale(" + scale.toFixed(3) + ")";
+        }
+      }
+
+      function updateEventCards() {
+        var trigger = window.innerHeight * 0.78;
+        var span = window.innerHeight * 0.5;
+        var isMobile = window.innerWidth <= 1000;
+
+        events.forEach(function (eventEl, index) {
+          var rect = eventEl.getBoundingClientRect();
+          var raw = (trigger - rect.top) / span;
+          var local = clamp(raw, 0, 1);
+          var eased = easeOutCubic(local);
+          var direction = index % 2 === 0 ? -1 : 1;
+          var xShift = isMobile ? 0 : 34 * direction * (1 - eased);
+          var yShift = 40 * (1 - eased);
+          var blur = 8 * (1 - eased);
+          var borderAlpha = 0.14 + 0.34 * eased;
+
+          eventEl.style.opacity = (0.08 + 0.92 * eased).toFixed(3);
+          eventEl.style.filter = "blur(" + blur.toFixed(2) + "px)";
+          eventEl.style.transform = "translate3d(" + xShift.toFixed(2) + "px," + yShift.toFixed(2) + "px,0)";
+          eventEl.style.borderColor = "rgba(134, 164, 255, " + borderAlpha.toFixed(3) + ")";
+        });
+      }
+
+      function updateTimeline() {
+        var rect = timeline.getBoundingClientRect();
+        var start = window.innerHeight * 0.9;
+        var end = window.innerHeight * 0.15;
+        var raw = (start - rect.top) / (rect.height + (start - end));
+        var ratio = clamp(raw, 0, 1);
+        path.style.strokeDashoffset = (pathLength * (1 - ratio)).toFixed(2);
+
+        balls.forEach(function (ball) {
+          revealSvgNode(ball, ratio, "cy", 0.014);
+        });
+
+        labels.forEach(function (text) {
+          revealSvgNode(text, ratio, "y", 0.032);
+        });
+
+        updateEventCards();
+      }
+
+      var ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            updateTimeline();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      function onResize() {
+        updateTimeline();
+      }
+
+      updateTimeline();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onResize);
+    })();
+  </script>
+</body>
+</html>
