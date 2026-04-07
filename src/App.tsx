@@ -9,6 +9,20 @@ function Hero() {
   const heroBackground = new URL('../img/bg-hero.png', import.meta.url).href;
   const menuIcon = new URL('../img/menu.png', import.meta.url).href;
   const [heroBusinessWord, setHeroBusinessWord] = useState("$$$$$$$");
+  const handleContactClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const footerSection = document.getElementById('footer');
+    if (!footerSection) return;
+
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const mobileOffset = isMobile ? 6 : 0;
+    const footerTop = footerSection.getBoundingClientRect().top + window.scrollY;
+
+    window.scrollTo({
+      top: Math.max(0, footerTop - mobileOffset),
+      behavior: 'smooth'
+    });
+  }, []);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -21,10 +35,10 @@ function Hero() {
   const heroLines = [
     { text: "Nós construímos sistemas para que se tornem", color: "#C4B9A5" },
     { text: "ferramenta de encantamento", color: "#00b0f0" },
-    { text: "para a audiência dos nossos clientes, e assim ajudamos o", color: "#C4B9A5" },
+    { text: "para a audiência dos nossos clientes, e assim ajudamos os", color: "#C4B9A5" },
     { text: "", color: "#00b0f0" },
-    { text: "a ser mais", color: "#C4B9A5" },
-    { text: "visível e relevante", color: "#00b0f0" }
+    { text: "a serem mais", color: "#C4B9A5" },
+    { text: "visíveis e relevantes", color: "#00b0f0" }
   ];
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -107,17 +121,18 @@ function Hero() {
         
         <motion.a
           href="#footer"
-          className="absolute top-12 right-12 z-20"
+          onClick={handleContactClick}
+          className="absolute top-6 right-4 md:top-12 md:right-12 z-20"
           aria-label="Ir para o rodapé"
           initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
-          <img src={menuIcon} alt="Menu" className="w-12 h-12 object-contain" />
+          <img src={menuIcon} alt="Menu" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
         </motion.a>
 
         <motion.div
-          className="relative z-10 text-center max-w-[800px] w-full px-6 flex flex-col items-center"
+          className="relative z-10 text-center max-w-[768px] w-full px-6 flex flex-col items-center"
           variants={heroTextContainer}
           initial="hidden"
           animate="show"
@@ -1019,12 +1034,14 @@ function Footer() {
 
   useEffect(() => {
     if (!isFooterInView) return;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const contentDelay = isMobile ? 900 : footerContentDelayMs;
     const timeoutId = window.setTimeout(() => {
       setShowFooterContent(true);
-    }, footerContentDelayMs);
+    }, contentDelay);
 
     return () => window.clearTimeout(timeoutId);
-  }, [isFooterInView]);
+  }, [isFooterInView, footerContentDelayMs]);
 
   return (
     <footer ref={footerRef} id="footer" className="min-h-screen bg-custom-blue relative overflow-hidden px-6 py-20 text-center z-10">
@@ -1073,6 +1090,49 @@ function Footer() {
   );
 }
 export default function App() {
+  useEffect(() => {
+    const defaultTitle = 'FOCCA-DEV';
+    const tabTitles = ['Oi...', 'continuamos aqui te aguardando...'];
+    let titleIndex = 0;
+    let intervalId: number | null = null;
+
+    const startTitleAlternation = () => {
+      if (intervalId !== null) return;
+      titleIndex = 0;
+      document.title = tabTitles[titleIndex];
+      intervalId = window.setInterval(() => {
+        titleIndex = (titleIndex + 1) % tabTitles.length;
+        document.title = tabTitles[titleIndex];
+      }, 2000);
+    };
+
+    const stopTitleAlternation = () => {
+      if (intervalId !== null) {
+        window.clearInterval(intervalId);
+        intervalId = null;
+      }
+      document.title = defaultTitle;
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        startTitleAlternation();
+        return;
+      }
+      stopTitleAlternation();
+    };
+
+    stopTitleAlternation();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (intervalId !== null) {
+        window.clearInterval(intervalId);
+      }
+    };
+  }, []);
+
   return (
     <div className="bg-custom-black min-h-screen font-sans selection:bg-custom-blue selection:text-white">
       <Hero />
