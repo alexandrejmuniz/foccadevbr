@@ -110,6 +110,12 @@ const TOP_PADDING = 120;
 const STEP_Y = 390;
 const CURVE_SWAY = 130;
 const BOTTOM_PADDING = 170;
+const MOBILE_VIEWBOX_WIDTH = 420;
+const MOBILE_CENTER_X = MOBILE_VIEWBOX_WIDTH / 2;
+const MOBILE_TOP_PADDING = 95;
+const MOBILE_STEP_Y = 332;
+const MOBILE_CURVE_SWAY = 48;
+const MOBILE_BOTTOM_PADDING = 120;
 
 const buildPath = (nodes: TimelineNodeData[]) => {
   if (!nodes.length) return '';
@@ -146,29 +152,54 @@ const DesktopTimelineNode: FC<{
   const cardOpacity = useTransform(progress, [start, end], [0.78, 1]);
   const cardY = useTransform(progress, [start, end], [18, 0]);
   const cardX = useTransform(progress, [start, end], [node.side === 'left' ? -26 : 26, 0]);
-  const cardBlur = useTransform(progress, [start, end], ['blur(2px)', 'blur(0px)']);
   const imageOpacity = useTransform(progress, [start, end], [0.82, 1]);
   const imageY = useTransform(progress, [start, end], [20, 0]);
   const imageX = useTransform(progress, [start, end], [node.side === 'left' ? 26 : -26, 0]);
   const imageScale = useTransform(progress, [start, end], [0.93, 1]);
-  const imageBlur = useTransform(progress, [start, end], ['blur(2px)', 'blur(0px)']);
   const shouldHalfImage = node.imageKey === '2001a2009' || node.imageKey === '2015' || node.imageKey === '2005';
   const isCelebrationLogo2024 = node.imageKey === '2024';
+  const celebrationIntroPeak = Math.min(1, start + 0.08);
+  const celebrationIntroSettle = Math.min(1, start + 0.2);
+  const celebrationImageOpacity = useTransform(
+    progress,
+    [start, celebrationIntroPeak, celebrationIntroSettle, end],
+    [0, 1, 1, 1]
+  );
+  const celebrationImageY = useTransform(
+    progress,
+    [start, celebrationIntroPeak, celebrationIntroSettle, end],
+    [82, -22, 2, 0]
+  );
+  const celebrationImageScale = useTransform(
+    progress,
+    [start, celebrationIntroPeak, celebrationIntroSettle, end],
+    [0.34, 1.26, 0.98, 1]
+  );
+  const celebrationImageRotate = useTransform(
+    progress,
+    [start, celebrationIntroPeak, celebrationIntroSettle, end],
+    [-18, 5, -1, 0]
+  );
+  const celebrationGlowOpacity = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle, end], [0, 1, 0.58, 0.45]);
+  const celebrationGlowScale = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle, end], [0.52, 1.24, 1.04, 1]);
+  const celebrationRingOpacity = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle, end], [0, 0.78, 0.18, 0]);
+  const celebrationRingScale = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle, end], [0.52, 1.44, 1.7, 1.88]);
+  const celebrationFlashOpacity = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle], [0.86, 0.12, 0]);
   const desktopImageWidth = shouldHalfImage
     ? node.id % 3 === 0
-      ? 'min(12.5vw, 180px)'
+      ? 'min(10.4vw, 150px)'
       : node.id % 3 === 1
-        ? 'min(10vw, 145px)'
-        : 'min(11.5vw, 165px)'
+        ? 'min(8.3vw, 120px)'
+        : 'min(9.5vw, 136px)'
     : isCelebrationLogo2024
-      ? 'min(35vw, 520px)'
+      ? 'min(29vw, 430px)'
       : node.imageKey === '2016-1'
-      ? 'min(33vw, 590px)'
+      ? 'min(27vw, 485px)'
       : node.id % 3 === 0
-        ? 'min(25vw, 360px)'
+        ? 'min(20.8vw, 300px)'
         : node.id % 3 === 1
-          ? 'min(20vw, 290px)'
-          : 'min(23vw, 330px)';
+          ? 'min(16.5vw, 238px)'
+          : 'min(19vw, 274px)';
 
   return (
     <div
@@ -195,7 +226,7 @@ const DesktopTimelineNode: FC<{
         className={`absolute top-1/2 -translate-y-1/2 w-[min(33vw,470px)] rounded-2xl border border-white/15 bg-[#111111]/95 p-4 lg:p-5 shadow-[0_18px_45px_rgba(0,0,0,0.45)] ${
           node.side === 'left' ? 'right-full mr-9' : 'left-full ml-9'
         }`}
-        style={{ opacity: cardOpacity, x: cardX, y: cardY, filter: cardBlur }}
+        style={{ opacity: cardOpacity, x: cardX, y: cardY }}
       >
         <div>
           <h3 className="text-3xl lg:text-4xl font-black text-sand tracking-tight leading-none">
@@ -212,7 +243,14 @@ const DesktopTimelineNode: FC<{
         className={`absolute top-1/2 -translate-y-1/2 ${
           node.side === 'left' ? 'left-full ml-8' : 'right-full mr-8'
         }`}
-        style={{ width: desktopImageWidth, opacity: imageOpacity, x: imageX, y: imageY, scale: imageScale, filter: imageBlur }}
+        style={{
+          width: desktopImageWidth,
+          opacity: isCelebrationLogo2024 ? celebrationImageOpacity : imageOpacity,
+          x: imageX,
+          y: isCelebrationLogo2024 ? celebrationImageY : imageY,
+          scale: isCelebrationLogo2024 ? celebrationImageScale : imageScale,
+          rotate: isCelebrationLogo2024 ? celebrationImageRotate : 0
+        }}
       >
         <motion.figure
           className={`relative rounded-2xl ${
@@ -231,12 +269,30 @@ const DesktopTimelineNode: FC<{
               : { duration: 6 + (node.id % 4), repeat: Infinity, ease: 'easeInOut' }
           }
         >
+          {isCelebrationLogo2024 && (
+            <motion.span
+              className="pointer-events-none absolute inset-[-8%] rounded-[30px] bg-[radial-gradient(circle,rgba(0,176,240,0.46)_0%,rgba(0,176,240,0.18)_42%,rgba(0,176,240,0)_74%)] blur-xl"
+              style={{ opacity: celebrationGlowOpacity, scale: celebrationGlowScale }}
+            />
+          )}
+          {isCelebrationLogo2024 && (
+            <motion.span
+              className="pointer-events-none absolute inset-[14%] rounded-full border border-[#8eeaff]/80"
+              style={{ opacity: celebrationRingOpacity, scale: celebrationRingScale }}
+            />
+          )}
+          {isCelebrationLogo2024 && (
+            <motion.span
+              className="pointer-events-none absolute inset-[2%] rounded-[20px] bg-[linear-gradient(130deg,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0)_55%)]"
+              style={{ opacity: celebrationFlashOpacity }}
+            />
+          )}
           <img
             src={imageSrc}
             alt={`${node.year} - ${node.media}`}
             loading="lazy"
             decoding="async"
-            className="w-full h-auto block"
+            className={`w-full h-auto block ${isCelebrationLogo2024 ? 'relative z-10' : ''}`}
           />
           {isCelebrationLogo2024 && (
             <>
@@ -266,6 +322,181 @@ const DesktopTimelineNode: FC<{
   );
 };
 
+const MobileTimelineNode: FC<{
+  node: TimelineNodeData;
+  progress: any;
+  totalHeight: number;
+  imageSrc: string;
+  prefersReducedMotion: boolean;
+}> = ({ node, progress, totalHeight, imageSrc, prefersReducedMotion }) => {
+  const progressPoint = node.cy / totalHeight;
+  const start = Math.max(0, progressPoint - 0.26);
+  const end = Math.min(1, progressPoint + 0.16);
+
+  const dotScale = useTransform(progress, [start, end], [0.58, 1]);
+  const dotOpacity = useTransform(progress, [start, end], [0.54, 1]);
+  const lineOpacity = useTransform(progress, [start, end], [0.1, 0.65]);
+  const lineScale = useTransform(progress, [start, end], [0.18, 1]);
+  const cardOpacity = useTransform(progress, [start, end], [0.66, 1]);
+  const cardY = useTransform(progress, [start, end], [20, 0]);
+  const cardX = useTransform(progress, [start, end], [node.side === 'left' ? 16 : -16, 0]);
+  const imageOpacity = useTransform(progress, [start, end], [0.75, 1]);
+  const imageY = useTransform(progress, [start, end], [16, 0]);
+  const imageX = useTransform(progress, [start, end], [node.side === 'left' ? 14 : -14, 0]);
+  const imageScale = useTransform(progress, [start, end], [0.88, 1]);
+  const shouldHalfImage = node.imageKey === '2001a2009' || node.imageKey === '2015' || node.imageKey === '2005';
+  const isCelebrationLogo2024 = node.imageKey === '2024';
+  const celebrationIntroPeak = Math.min(1, start + 0.11);
+  const celebrationIntroSettle = Math.min(1, start + 0.24);
+  const celebrationImageOpacity = useTransform(
+    progress,
+    [start, celebrationIntroPeak, celebrationIntroSettle, end],
+    [0, 1, 1, 1]
+  );
+  const celebrationImageY = useTransform(
+    progress,
+    [start, celebrationIntroPeak, celebrationIntroSettle, end],
+    [66, -14, 2, 0]
+  );
+  const celebrationImageScale = useTransform(
+    progress,
+    [start, celebrationIntroPeak, celebrationIntroSettle, end],
+    [0.46, 1.2, 0.98, 1]
+  );
+  const celebrationImageRotate = useTransform(
+    progress,
+    [start, celebrationIntroPeak, celebrationIntroSettle, end],
+    [-14, 4, -1, 0]
+  );
+  const celebrationGlowOpacity = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle, end], [0, 1, 0.58, 0.42]);
+  const celebrationGlowScale = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle, end], [0.58, 1.2, 1.04, 1]);
+  const celebrationRingOpacity = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle, end], [0, 0.74, 0.16, 0]);
+  const celebrationRingScale = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle, end], [0.5, 1.38, 1.64, 1.8]);
+  const celebrationFlashOpacity = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle], [0.84, 0.14, 0]);
+  const mobileImageWidth = shouldHalfImage
+    ? 'min(24vw, 96px)'
+    : isCelebrationLogo2024
+      ? 'min(44vw, 190px)'
+      : node.imageKey === '2016-1'
+        ? 'min(40vw, 172px)'
+        : 'min(33vw, 142px)';
+
+  return (
+    <div
+      className="absolute"
+      style={{
+        left: `${(node.cx / MOBILE_VIEWBOX_WIDTH) * 100}%`,
+        top: `${(node.cy / totalHeight) * 100}%`,
+        transform: 'translate(-50%, -50%)'
+      }}
+    >
+      <motion.div
+        className={`absolute top-1/2 -translate-y-1/2 h-px w-10 origin-center bg-white/45 ${
+          node.side === 'left' ? 'right-full mr-3' : 'left-full ml-3'
+        }`}
+        style={{ opacity: lineOpacity, scaleX: lineScale }}
+      />
+
+      <motion.div
+        className="w-4 h-4 rounded-full bg-white shadow-[0_0_16px_rgba(255,255,255,0.52)] z-20"
+        style={{ scale: dotScale, opacity: dotOpacity }}
+      />
+
+      <motion.article
+        className={`absolute top-1/2 -translate-y-1/2 w-[min(50vw,208px)] rounded-xl border border-white/15 bg-[#111111]/95 p-3 shadow-[0_14px_30px_rgba(0,0,0,0.42)] ${
+          node.side === 'left' ? 'left-full ml-4 text-left' : 'right-full mr-4 text-right'
+        }`}
+        style={{ opacity: cardOpacity, x: cardX, y: cardY }}
+      >
+        <div>
+          <h3 className="text-[1.55rem] leading-none font-black text-sand tracking-tight">
+            {node.year}
+          </h3>
+        </div>
+
+        <p className="mt-2 text-[11px] leading-[1.42] text-[#d7cfbf]">
+          {node.text}
+        </p>
+      </motion.article>
+
+      <motion.div
+        className={`absolute top-1/2 -translate-y-1/2 ${
+          node.side === 'left' ? 'right-full mr-4' : 'left-full ml-4'
+        }`}
+        style={{
+          width: mobileImageWidth,
+          opacity: isCelebrationLogo2024 ? celebrationImageOpacity : imageOpacity,
+          x: imageX,
+          y: isCelebrationLogo2024 ? celebrationImageY : imageY,
+          scale: isCelebrationLogo2024 ? celebrationImageScale : imageScale,
+          rotate: isCelebrationLogo2024 ? celebrationImageRotate : 0
+        }}
+      >
+        <motion.figure
+          className={`relative rounded-xl ${
+            isCelebrationLogo2024
+              ? 'overflow-visible bg-transparent shadow-none p-2'
+              : 'overflow-hidden bg-[#0f0f10] border border-custom-blue/40 shadow-[0_14px_28px_rgba(0,0,0,0.45)]'
+          }`}
+          animate={
+            prefersReducedMotion
+              ? undefined
+              : { y: [0, -6, 0], rotate: [node.side === 'left' ? -1.5 : 1.5, 0, node.side === 'left' ? -1.5 : 1.5] }
+          }
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : { duration: 4.8 + (node.id % 3), repeat: Infinity, ease: 'easeInOut' }
+          }
+        >
+          {isCelebrationLogo2024 && (
+            <motion.span
+              className="pointer-events-none absolute inset-[-8%] rounded-[28px] bg-[radial-gradient(circle,rgba(0,176,240,0.45)_0%,rgba(0,176,240,0.16)_44%,rgba(0,176,240,0)_76%)] blur-lg"
+              style={{ opacity: celebrationGlowOpacity, scale: celebrationGlowScale }}
+            />
+          )}
+          {isCelebrationLogo2024 && (
+            <motion.span
+              className="pointer-events-none absolute inset-[14%] rounded-full border border-[#8eeaff]/80"
+              style={{ opacity: celebrationRingOpacity, scale: celebrationRingScale }}
+            />
+          )}
+          {isCelebrationLogo2024 && (
+            <motion.span
+              className="pointer-events-none absolute inset-[4%] rounded-[18px] bg-[linear-gradient(130deg,rgba(255,255,255,0.88)_0%,rgba(255,255,255,0)_55%)]"
+              style={{ opacity: celebrationFlashOpacity }}
+            />
+          )}
+          <img
+            src={imageSrc}
+            alt={`${node.year} - ${node.media}`}
+            loading="lazy"
+            decoding="async"
+            className={`w-full h-auto block ${isCelebrationLogo2024 ? 'relative z-10' : ''}`}
+          />
+          {isCelebrationLogo2024 && (
+            <>
+              <motion.span
+                className="pointer-events-none absolute -top-1 left-[14%] h-2 w-2 rounded-full bg-[#8eeaff]"
+                animate={prefersReducedMotion ? undefined : { y: [0, -8, 0], opacity: [0.4, 0.95, 0.4] }}
+                transition={prefersReducedMotion ? undefined : { duration: 1.7, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              <motion.span
+                className="pointer-events-none absolute top-[18%] -right-1 h-2 w-2 rounded-full bg-[#ffd166]"
+                animate={prefersReducedMotion ? undefined : { y: [0, -7, 0], x: [0, 2, 0], opacity: [0.35, 0.9, 0.35] }}
+                transition={prefersReducedMotion ? undefined : { duration: 1.6, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
+              />
+            </>
+          )}
+          {!isCelebrationLogo2024 && (
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.24),transparent_55%)]" />
+          )}
+        </motion.figure>
+      </motion.div>
+    </div>
+  );
+};
+
 export default function TimelineSection() {
   const timelineImage = new URL('../../img/timeline.png', import.meta.url).href;
   const imageByYear: Record<string, string> = {
@@ -283,7 +514,7 @@ export default function TimelineSection() {
     '2025': new URL('../../img/timeline/2025.jpg', import.meta.url).href
   };
 
-  const nodes = useMemo<TimelineNodeData[]>(
+  const desktopNodes = useMemo<TimelineNodeData[]>(
     () =>
       timelineData.map((item, index) => ({
         ...item,
@@ -294,31 +525,56 @@ export default function TimelineSection() {
     []
   );
 
-  const timelineHeight = TOP_PADDING + (timelineData.length - 1) * STEP_Y + BOTTOM_PADDING;
-  const pathD = useMemo(() => buildPath(nodes), [nodes]);
+  const mobileNodes = useMemo<TimelineNodeData[]>(
+    () =>
+      timelineData.map((item, index) => ({
+        ...item,
+        side: index % 2 === 0 ? 'left' : 'right',
+        cx: MOBILE_CENTER_X + (index % 2 === 0 ? -MOBILE_CURVE_SWAY : MOBILE_CURVE_SWAY),
+        cy: MOBILE_TOP_PADDING + index * MOBILE_STEP_Y
+      })),
+    []
+  );
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const desktopTimelineHeight = TOP_PADDING + (timelineData.length - 1) * STEP_Y + BOTTOM_PADDING;
+  const desktopPathD = useMemo(() => buildPath(desktopNodes), [desktopNodes]);
+  const mobileTimelineHeight = MOBILE_TOP_PADDING + (timelineData.length - 1) * MOBILE_STEP_Y + MOBILE_BOTTOM_PADDING;
+  const mobilePathD = useMemo(() => buildPath(mobileNodes), [mobileNodes]);
+
+  const desktopContainerRef = useRef<HTMLDivElement>(null);
+  const mobileContainerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
+  const { scrollYProgress: desktopScrollYProgress } = useScroll({
+    target: desktopContainerRef,
     offset: ['start 85%', 'end 45%']
   });
+  const { scrollYProgress: mobileScrollYProgress } = useScroll({
+    target: mobileContainerRef,
+    offset: ['start 88%', 'end 44%']
+  });
 
-  const smoothProgress = useSpring(scrollYProgress, {
+  const desktopSmoothProgress = useSpring(desktopScrollYProgress, {
     stiffness: 145,
     damping: 29,
     mass: 0.36
   });
+  const mobileSmoothProgress = useSpring(mobileScrollYProgress, {
+    stiffness: 152,
+    damping: 30,
+    mass: 0.34
+  });
 
-  const activeProgress = prefersReducedMotion ? scrollYProgress : smoothProgress;
-  const introOpacity = useTransform(activeProgress, [0, 0.09], [0, 1]);
+  const desktopActiveProgress = prefersReducedMotion ? desktopScrollYProgress : desktopSmoothProgress;
+  const mobileActiveProgress = prefersReducedMotion ? mobileScrollYProgress : mobileSmoothProgress;
+  const desktopIntroOpacity = useTransform(desktopActiveProgress, [0, 0.09], [0, 1]);
+  const mobileIntroOpacity = useTransform(mobileActiveProgress, [0, 0.1], [0, 1]);
 
   return (
     <section className="relative py-24 px-6 bg-custom-black z-10">
       <div className="max-w-4xl mx-auto text-center mb-16">
         <motion.h2
-          initial={{ opacity: 0, y: 22, filter: 'blur(8px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.55 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           className="text-5xl md:text-7xl font-black tracking-tight leading-[0.95]"
@@ -329,8 +585,8 @@ export default function TimelineSection() {
         </motion.h2>
 
         <motion.div
-          initial={{ opacity: 0, y: 18, filter: 'blur(10px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.85, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           className="relative mx-auto mt-8 w-[min(90vw,620px)] md:w-[min(62vw,620px)]"
@@ -357,118 +613,83 @@ export default function TimelineSection() {
         </motion.div>
       </div>
 
-      <div className="md:hidden max-w-2xl mx-auto space-y-5">
-        {timelineData.map((item) => {
-          const shouldHalfImage = item.imageKey === '2001a2009' || item.imageKey === '2015' || item.imageKey === '2005';
-          const isCelebrationLogo2024 = item.imageKey === '2024';
-          const mobileImageClass = isCelebrationLogo2024
-            ? 'w-[96%] mx-auto'
-            : shouldHalfImage
-            ? 'w-[46%] mx-auto'
-            : item.id % 3 === 0
-              ? 'w-[92%] mx-auto'
-              : item.id % 3 === 1
-                ? 'w-[84%] mx-auto'
-                : 'w-[88%] mx-auto';
-
-          return (
-            <motion.div
-              key={`mobile-${item.id}`}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-3"
-            >
-              <motion.figure
-                className={`relative rounded-2xl ${
-                  isCelebrationLogo2024
-                    ? 'overflow-visible bg-transparent shadow-none p-2'
-                    : 'overflow-hidden bg-[#0f0f10] border border-custom-blue/40 shadow-[0_18px_35px_rgba(0,0,0,0.45)]'
-                } ${mobileImageClass}`}
-                animate={
-                  prefersReducedMotion
-                    ? undefined
-                    : { y: [0, -6, 0] }
-                }
-                transition={
-                  prefersReducedMotion
-                    ? undefined
-                    : { duration: 5.5, repeat: Infinity, ease: 'easeInOut' }
-                }
-              >
-                <img
-                  src={imageByYear[item.imageKey]}
-                  alt={`${item.year} - ${item.media}`}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-auto block"
-                />
-                {isCelebrationLogo2024 && (
-                  <>
-                    <motion.span
-                      className="pointer-events-none absolute -top-1 left-[14%] h-2 w-2 rounded-full bg-[#8eeaff]"
-                      animate={prefersReducedMotion ? undefined : { y: [0, -8, 0], opacity: [0.4, 0.95, 0.4] }}
-                      transition={prefersReducedMotion ? undefined : { duration: 1.7, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                    <motion.span
-                      className="pointer-events-none absolute top-[18%] -right-1 h-2 w-2 rounded-full bg-[#ffd166]"
-                      animate={prefersReducedMotion ? undefined : { y: [0, -7, 0], x: [0, 2, 0], opacity: [0.35, 0.9, 0.35] }}
-                      transition={prefersReducedMotion ? undefined : { duration: 1.6, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
-                    />
-                  </>
-                )}
-                {!isCelebrationLogo2024 && (
-                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.28),transparent_50%)]" />
-                )}
-              </motion.figure>
-
-              <motion.article className="rounded-2xl border border-white/15 bg-[#111111]/95 p-5">
-                <div>
-                  <h3 className="text-3xl font-black text-sand tracking-tight">{item.year}</h3>
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-[#d7cfbf]">{item.text}</p>
-              </motion.article>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      <div className="hidden md:block max-w-[1500px] mx-auto px-6 lg:px-8">
+      <div className="md:hidden max-w-[430px] mx-auto">
         <div
-          ref={containerRef}
-          className="relative w-full mx-auto"
-          style={{ height: `${timelineHeight}px` }}
+          ref={mobileContainerRef}
+          className="relative w-full mx-auto overflow-hidden"
+          style={{ height: `${mobileTimelineHeight}px` }}
         >
           <svg
             className="absolute top-0 left-0 w-full h-full"
-            viewBox={`0 0 ${VIEWBOX_WIDTH} ${timelineHeight}`}
+            viewBox={`0 0 ${MOBILE_VIEWBOX_WIDTH} ${mobileTimelineHeight}`}
             fill="none"
             preserveAspectRatio="none"
           >
             <path
-              d={pathD}
+              d={mobilePathD}
+              stroke="#2b2b2b"
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <motion.path
+              d={mobilePathD}
+              stroke="#9ca3af"
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ pathLength: mobileActiveProgress, opacity: mobileIntroOpacity }}
+            />
+          </svg>
+
+          {mobileNodes.map((node) => (
+            <MobileTimelineNode
+              key={`mobile-${node.id}`}
+              node={node}
+              progress={mobileActiveProgress}
+              totalHeight={mobileTimelineHeight}
+              imageSrc={imageByYear[node.imageKey]}
+              prefersReducedMotion={Boolean(prefersReducedMotion)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="hidden md:block max-w-[1500px] mx-auto px-6 lg:px-8">
+        <div
+          ref={desktopContainerRef}
+          className="relative w-full mx-auto"
+          style={{ height: `${desktopTimelineHeight}px` }}
+        >
+          <svg
+            className="absolute top-0 left-0 w-full h-full"
+            viewBox={`0 0 ${VIEWBOX_WIDTH} ${desktopTimelineHeight}`}
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d={desktopPathD}
               stroke="#2e2e2e"
               strokeWidth="10"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <motion.path
-              d={pathD}
+              d={desktopPathD}
               stroke="#9ca3af"
               strokeWidth="10"
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={{ pathLength: activeProgress, opacity: introOpacity }}
+              style={{ pathLength: desktopActiveProgress, opacity: desktopIntroOpacity }}
             />
           </svg>
 
-          {nodes.map((node) => (
+          {desktopNodes.map((node) => (
             <DesktopTimelineNode
               key={node.id}
               node={node}
-              progress={activeProgress}
-              totalHeight={timelineHeight}
+              progress={desktopActiveProgress}
+              totalHeight={desktopTimelineHeight}
               imageSrc={imageByYear[node.imageKey]}
               prefersReducedMotion={Boolean(prefersReducedMotion)}
             />

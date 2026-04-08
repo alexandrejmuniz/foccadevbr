@@ -293,40 +293,65 @@ const TextReveal = ({
     const boxedMatch = boxedByStart.get(i);
 
     if (boxedMatch) {
-      const chunk: React.ReactNode[] = [];
       const breakAfterWords = normalizedLineBreaks.get(boxedMatch.phraseKey);
+      const totalWordsInMatch = boxedMatch.end - boxedMatch.start + 1;
+      const shouldStackBlocks =
+        typeof breakAfterWords === "number" &&
+        breakAfterWords > 0 &&
+        breakAfterWords < totalWordsInMatch;
 
-      for (let j = boxedMatch.start; j <= boxedMatch.end; j++) {
-        const start = range[0] + step * j;
-        const end = range[0] + step * (j + 1);
-        const isHighlight = highlightIndexes.has(j);
-        const shouldBreakLine =
-          typeof breakAfterWords === "number" &&
-          j - boxedMatch.start + 1 === breakAfterWords &&
-          j < boxedMatch.end;
+      const renderBoxedWords = (startIndex: number, endIndex: number, keyPrefix: string) => {
+        const chunk: React.ReactNode[] = [];
 
-        chunk.push(
-          <span key={`boxed-word-${j}`}>
-            <Word
-              progress={progress}
-              range={[start, end]}
-              highlight={isHighlight}
-              startColor={startColor}
-              endColor={endColor}
-              highlightColor={highlightColor}
-            >
-              {words[j]}
-            </Word>
-            {shouldBreakLine ? <br /> : j < boxedMatch.end && " "}
-          </span>
-        );
-      }
+        for (let j = startIndex; j <= endIndex; j++) {
+          const start = range[0] + step * j;
+          const end = range[0] + step * (j + 1);
+          const isHighlight = highlightIndexes.has(j);
+
+          chunk.push(
+            <span key={`${keyPrefix}-${j}`}>
+              <Word
+                progress={progress}
+                range={[start, end]}
+                highlight={isHighlight}
+                startColor={startColor}
+                endColor={endColor}
+                highlightColor={highlightColor}
+              >
+                {words[j]}
+              </Word>
+              {j < endIndex && " "}
+            </span>
+          );
+        }
+
+        return chunk;
+      };
 
       renderedWords.push(
         <React.Fragment key={`boxed-fragment-${i}`}>
-          <span className={`diagonal-highlight ${boxedMatch.phraseKey === firstHighlightKey ? 'diagonal-highlight--first' : ''}`.trim()}>
-            {chunk}
-          </span>
+          {shouldStackBlocks ? (
+            <span className="diagonal-highlight-stack">
+              <span className="diagonal-highlight diagonal-highlight--stacked">
+                {renderBoxedWords(
+                  boxedMatch.start,
+                  boxedMatch.start + breakAfterWords - 1,
+                  `boxed-line-1-${boxedMatch.start}`
+                )}
+              </span>
+              <span className="diagonal-highlight diagonal-highlight--stacked">
+                {renderBoxedWords(
+                  boxedMatch.start + breakAfterWords,
+                  boxedMatch.end,
+                  `boxed-line-2-${boxedMatch.start}`
+                )}
+              </span>
+            </span>
+          ) : (
+            <span className={`diagonal-highlight ${boxedMatch.phraseKey === firstHighlightKey ? 'diagonal-highlight--first' : ''}`.trim()}>
+              {renderBoxedWords(boxedMatch.start, boxedMatch.end, `boxed-line-${boxedMatch.start}`)}
+            </span>
+          )}
           {boxedMatch.end < words.length - 1 && " "}
         </React.Fragment>
       );
@@ -490,7 +515,6 @@ function PerspectiveZoomPhrase() {
       {
         id: "h2-1",
         title: "H2 Gaming Opportunity",
-        badge: "Projetos Recentes",
         description:
           "Plataforma de conteúdos para apresentação de iniciativas e resultados, voltada para captação de novos investidores.",
         image: h2ProjectImage
@@ -498,7 +522,6 @@ function PerspectiveZoomPhrase() {
       {
         id: "batux-1",
         title: "Batuxpay",
-        badge: "Projetos Recentes",
         description:
           "Sistema automatizado de gestão e pagamento de premiações para promoções em formatos pix",
         image: batuxProjectImage
@@ -605,21 +628,84 @@ function PerspectiveZoomPhrase() {
     setIsDragging(false);
     setIsPaused(false);
   };
+  const projectTitleContainer = {
+    hidden: prefersReducedMotion
+      ? { opacity: 0 }
+      : {
+          opacity: 0,
+          y: 86,
+          scale: 0.56,
+          rotateX: 60,
+          filter: "blur(14px)",
+          transformPerspective: 1500
+        },
+    show: prefersReducedMotion
+      ? { opacity: 1, transition: { duration: 0.32 } }
+      : {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          filter: "blur(0px)",
+          transformPerspective: 1500,
+          transition: {
+            duration: 1.05,
+            ease: [0.16, 1, 0.3, 1],
+            when: "beforeChildren",
+            delayChildren: 0.08,
+            staggerChildren: 0.14
+          }
+        }
+  };
+  const projectTitleLine = {
+    hidden: prefersReducedMotion
+      ? { opacity: 0 }
+      : { opacity: 0, y: 42, scale: 0.86, rotateX: 38, filter: "blur(10px)" },
+    show: prefersReducedMotion
+      ? { opacity: 1, transition: { duration: 0.24 } }
+      : {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          filter: "blur(0px)",
+          transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] }
+        }
+  };
 
   return (
     <section ref={ref} className="relative bg-custom-black z-10 min-h-screen flex items-center py-6 md:py-8 px-4 md:px-6">
       <div className="max-w-6xl mx-auto w-full flex flex-col items-center gap-6 md:gap-9">
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center font-montserrat font-black tracking-tight text-3xl md:text-5xl leading-[0.95]"
-        >
-          <span className="text-sand">Projetos</span>
-          <br />
-          <span className="text-custom-blue">Recentes</span>
-        </motion.p>
+        <div className="relative [perspective:1500px]">
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-24 w-[min(78vw,560px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,176,240,0.48)_0%,rgba(0,176,240,0.18)_40%,rgba(0,176,240,0)_74%)] blur-2xl"
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.28 }}
+            whileInView={prefersReducedMotion ? { opacity: 0.45 } : { opacity: 0.92, scale: 1.18 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: prefersReducedMotion ? 0.4 : 1.1, ease: [0.16, 1, 0.3, 1] }}
+          />
+          <motion.p
+            variants={projectTitleContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.52 }}
+            className="relative text-center font-montserrat font-black tracking-tight text-3xl md:text-5xl leading-[0.95] [transform-style:preserve-3d]"
+          >
+            <motion.span
+              variants={projectTitleLine}
+              className="block text-sand [text-shadow:0_14px_36px_rgba(0,0,0,0.38)]"
+            >
+              Projetos
+            </motion.span>
+            <motion.span
+              variants={projectTitleLine}
+              className="block text-custom-blue [text-shadow:0_0_30px_rgba(0,176,240,0.5)]"
+            >
+              Recentes
+            </motion.span>
+          </motion.p>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 28, scale: 0.98 }}
@@ -868,16 +954,16 @@ function Testimonials() {
   const titleRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: titleScrollProgress } = useScroll({
     target: titleRef,
-    offset: ['start start', 'end end']
+    offset: ['start 90%', 'end end']
   });
   const smoothTitleProgress = useSpring(titleScrollProgress, {
     stiffness: 130,
     damping: 26,
     mass: 0.35
   });
-  const algunsX = useTransform(smoothTitleProgress, [0, 1], [-900, 0]);
-  const depoimentosX = useTransform(smoothTitleProgress, [0, 1], [900, 0]);
-  const titleOpacity = useTransform(smoothTitleProgress, [0, 0.18, 1], [0.45, 1, 1]);
+  const algunsX = useTransform(smoothTitleProgress, [0, 1], [-560, 0]);
+  const depoimentosX = useTransform(smoothTitleProgress, [0, 1], [560, 0]);
+  const titleOpacity = useTransform(smoothTitleProgress, [0, 0.1, 1], [0.7, 1, 1]);
   const titleScale = useTransform(smoothTitleProgress, [0, 1], [1.08, 1]);
 
   const testimonials = [
@@ -900,11 +986,11 @@ function Testimonials() {
 
   return (
     <section className="bg-custom-black relative z-10">
-      <div ref={titleRef} className="relative h-[135vh] md:h-[200vh]">
+      <div ref={titleRef} className="relative h-[100vh] md:h-[200vh]">
         <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center px-4">
           <motion.h2
             style={{ scale: titleScale, opacity: titleOpacity }}
-            className="w-full text-center font-black tracking-tight leading-[0.76] text-[clamp(4rem,20vw,18rem)]"
+            className="w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,14rem)]"
           >
             <motion.span style={{ x: algunsX }} className="block text-custom-blue will-change-transform whitespace-nowrap">
               Alguns
@@ -941,8 +1027,6 @@ const TestimonialCard: React.FC<{
     damping: 24,
     mass: 0.35
   });
-  const textWordCount = t.text.split(/\s+/).filter(Boolean).length;
-  const mobileQuoteSizeClass = textWordCount > 75 ? 'text-xl' : textWordCount > 52 ? 'text-2xl' : 'text-3xl';
 
   return (
     <motion.div
@@ -953,7 +1037,7 @@ const TestimonialCard: React.FC<{
       transition={{ duration: 0.8 }}
       className="relative"
     >
-      <h3 className={`testimonial-quote ${mobileQuoteSizeClass} md:text-5xl font-bold leading-tight relative z-10 mb-12`}>
+      <h3 className="testimonial-quote text-2xl md:text-4xl font-bold leading-tight relative z-10 mb-12">
         <ProgressiveText text={t.text} progress={smoothProgress} />
       </h3>
       <div className="flex items-center gap-6">
@@ -1080,7 +1164,9 @@ function Footer() {
                 <a href="https://wa.me/5511994950509" target="_blank" rel="noopener noreferrer" aria-label="Enviar mensagem no WhatsApp para +55 11 99495-0509">
                   <img src={whatsappIcon} alt="WhatsApp" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
                 </a>
-                <img src={linkedinIcon} alt="LinkedIn" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
+                <a href="https://www.linkedin.com/company/focca-dev" target="_blank" rel="noopener noreferrer" aria-label="Abrir LinkedIn da FOCCA DEV">
+                  <img src={linkedinIcon} alt="LinkedIn" className="w-10 h-10 md:w-12 md:h-12 object-contain" />
+                </a>
               </div>
             </div>
           </motion.div>
