@@ -35,7 +35,7 @@ function Hero() {
   const heroLines = [
     { text: "Nós construímos sistemas para que se tornem", color: "#C4B9A5" },
     { text: "ferramenta de encantamento", color: "#00b0f0" },
-    { text: "para a audiência dos nossos clientes, e assim ajudamos os", color: "#C4B9A5" },
+    { text: "para a audiência dos nossos clientes, e assim, ajudamos os", color: "#C4B9A5" },
     { text: "", color: "#00b0f0" },
     { text: "a serem mais", color: "#C4B9A5" },
     { text: "visíveis e relevantes", color: "#00b0f0" }
@@ -1153,7 +1153,7 @@ function Footer() {
                 <h2 className="text-3xl font-bold text-white/80">É só nos mandar uma mensagem.</h2>
               </div>
               <h2 className="hidden md:block text-4xl md:text-6xl font-bold text-white mb-2">Vamos tomar um café?</h2>
-              <h2 className="hidden md:block text-3xl md:text-5xl font-bold text-white/80">É só nos mande uma mensagem nos canais abaixo.</h2>
+              <h2 className="hidden md:block text-3xl md:text-5xl font-bold text-white/80">É só nos mandar uma mensagem.</h2>
             </div>
             <div className="flex flex-col items-center justify-center gap-4 pt-3">
               <img src={foccaIcon} alt="Focca" className="w-20 md:w-24 h-auto" />
