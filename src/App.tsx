@@ -4,6 +4,26 @@ import { ChevronLeft, ChevronRight, Download, PenTool, Star } from 'lucide-react
 import TimelineSection from './components/TimelineSection';
 import FooterMatterPills from './components/FooterMatterPills';
 
+const MOBILE_MEDIA_QUERY = '(max-width: 767px)';
+
+function useIsMobileViewport() {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(MOBILE_MEDIA_QUERY).matches : false
+  );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia(MOBILE_MEDIA_QUERY);
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+    updateIsMobile();
+    mediaQuery.addEventListener('change', updateIsMobile);
+    return () => mediaQuery.removeEventListener('change', updateIsMobile);
+  }, []);
+
+  return isMobile;
+}
+
 function Hero() {
   const ref = useRef(null);
   const heroBackground = new URL('../img/bg-hero.png', import.meta.url).href;
@@ -500,6 +520,7 @@ function Intro() {
 function PerspectiveZoomPhrase() {
   const ref = useRef<HTMLElement | null>(null);
   const projectTitleRef = useRef<HTMLDivElement | null>(null);
+  const isMobileViewport = useIsMobileViewport();
   const h2ProjectImage = new URL('../img/projetos/h2.png', import.meta.url).href;
   const batuxProjectImage = new URL('../img/projetos/batux.png', import.meta.url).href;
   const [activeSlide, setActiveSlide] = useState(0);
@@ -510,19 +531,23 @@ function PerspectiveZoomPhrase() {
   const trackViewportRef = useRef<HTMLDivElement | null>(null);
   const pointerStartX = useRef<number | null>(null);
   const pointerId = useRef<number | null>(null);
+  const projectTitleOffset = isMobileViewport
+    ? (['start 98%', 'end 62%'] as ['start 98%', 'end 62%'])
+    : (['start 90%', 'end end'] as ['start 90%', 'end end']);
   const { scrollYProgress: projectTitleScrollProgress } = useScroll({
     target: projectTitleRef,
-    offset: ['start 90%', 'end end']
+    offset: projectTitleOffset
   });
   const smoothProjectTitleProgress = useSpring(projectTitleScrollProgress, {
-    stiffness: 130,
-    damping: 26,
+    stiffness: isMobileViewport ? 170 : 130,
+    damping: isMobileViewport ? 30 : 26,
     mass: 0.35
   });
-  const projetosX = useTransform(smoothProjectTitleProgress, [0, 1], [-560, 0]);
-  const recentesX = useTransform(smoothProjectTitleProgress, [0, 1], [560, 0]);
+  const projectTitleSlideDistance = isMobileViewport ? 260 : 560;
+  const projetosX = useTransform(smoothProjectTitleProgress, [0, 1], [-projectTitleSlideDistance, 0]);
+  const recentesX = useTransform(smoothProjectTitleProgress, [0, 1], [projectTitleSlideDistance, 0]);
   const projectTitleOpacity = useTransform(smoothProjectTitleProgress, [0, 0.1, 1], [0.7, 1, 1]);
-  const projectTitleScale = useTransform(smoothProjectTitleProgress, [0, 1], [1.08, 1]);
+  const projectTitleScale = useTransform(smoothProjectTitleProgress, [0, 1], [isMobileViewport ? 1.04 : 1.08, 1]);
 
   const projectSlides = useMemo(
     () => [
@@ -918,19 +943,24 @@ function Projects() {
 
 function Testimonials() {
   const titleRef = useRef<HTMLDivElement | null>(null);
+  const isMobileViewport = useIsMobileViewport();
+  const testimonialTitleOffset = isMobileViewport
+    ? (['start 98%', 'end 62%'] as ['start 98%', 'end 62%'])
+    : (['start 90%', 'end end'] as ['start 90%', 'end end']);
   const { scrollYProgress: titleScrollProgress } = useScroll({
     target: titleRef,
-    offset: ['start 90%', 'end end']
+    offset: testimonialTitleOffset
   });
   const smoothTitleProgress = useSpring(titleScrollProgress, {
-    stiffness: 130,
-    damping: 26,
+    stiffness: isMobileViewport ? 170 : 130,
+    damping: isMobileViewport ? 30 : 26,
     mass: 0.35
   });
-  const algunsX = useTransform(smoothTitleProgress, [0, 1], [-560, 0]);
-  const depoimentosX = useTransform(smoothTitleProgress, [0, 1], [560, 0]);
+  const testimonialTitleSlideDistance = isMobileViewport ? 260 : 560;
+  const algunsX = useTransform(smoothTitleProgress, [0, 1], [-testimonialTitleSlideDistance, 0]);
+  const depoimentosX = useTransform(smoothTitleProgress, [0, 1], [testimonialTitleSlideDistance, 0]);
   const titleOpacity = useTransform(smoothTitleProgress, [0, 0.1, 1], [0.7, 1, 1]);
-  const titleScale = useTransform(smoothTitleProgress, [0, 1], [1.08, 1]);
+  const titleScale = useTransform(smoothTitleProgress, [0, 1], [isMobileViewport ? 1.04 : 1.08, 1]);
 
   const testimonials = [
     {
@@ -952,8 +982,8 @@ function Testimonials() {
 
   return (
     <section className="bg-custom-black relative z-10">
-      <div ref={titleRef} className="relative h-[100vh] md:h-[200vh]">
-        <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center px-4">
+      <div ref={titleRef} className="relative h-[50vh] md:h-[200vh]">
+        <div className="sticky top-0 h-[50vh] md:h-screen overflow-hidden flex items-center justify-center px-4">
           <motion.h2
             style={{ scale: titleScale, opacity: titleOpacity }}
             className="w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,14rem)]"
