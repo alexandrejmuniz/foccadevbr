@@ -499,6 +499,7 @@ function Intro() {
 
 function PerspectiveZoomPhrase() {
   const ref = useRef<HTMLElement | null>(null);
+  const projectTitleRef = useRef<HTMLDivElement | null>(null);
   const h2ProjectImage = new URL('../img/projetos/h2.png', import.meta.url).href;
   const batuxProjectImage = new URL('../img/projetos/batux.png', import.meta.url).href;
   const [activeSlide, setActiveSlide] = useState(0);
@@ -509,6 +510,19 @@ function PerspectiveZoomPhrase() {
   const trackViewportRef = useRef<HTMLDivElement | null>(null);
   const pointerStartX = useRef<number | null>(null);
   const pointerId = useRef<number | null>(null);
+  const { scrollYProgress: projectTitleScrollProgress } = useScroll({
+    target: projectTitleRef,
+    offset: ['start 90%', 'end end']
+  });
+  const smoothProjectTitleProgress = useSpring(projectTitleScrollProgress, {
+    stiffness: 130,
+    damping: 26,
+    mass: 0.35
+  });
+  const projetosX = useTransform(smoothProjectTitleProgress, [0, 1], [-560, 0]);
+  const recentesX = useTransform(smoothProjectTitleProgress, [0, 1], [560, 0]);
+  const projectTitleOpacity = useTransform(smoothProjectTitleProgress, [0, 0.1, 1], [0.7, 1, 1]);
+  const projectTitleScale = useTransform(smoothProjectTitleProgress, [0, 1], [1.08, 1]);
 
   const projectSlides = useMemo(
     () => [
@@ -628,55 +642,10 @@ function PerspectiveZoomPhrase() {
     setIsDragging(false);
     setIsPaused(false);
   };
-  const projectTitleContainer = {
-    hidden: prefersReducedMotion
-      ? { opacity: 0 }
-      : {
-          opacity: 0,
-          y: 86,
-          scale: 0.56,
-          rotateX: 60,
-          filter: "blur(14px)",
-          transformPerspective: 1500
-        },
-    show: prefersReducedMotion
-      ? { opacity: 1, transition: { duration: 0.32 } }
-      : {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotateX: 0,
-          filter: "blur(0px)",
-          transformPerspective: 1500,
-          transition: {
-            duration: 1.05,
-            ease: [0.16, 1, 0.3, 1],
-            when: "beforeChildren",
-            delayChildren: 0.08,
-            staggerChildren: 0.14
-          }
-        }
-  };
-  const projectTitleLine = {
-    hidden: prefersReducedMotion
-      ? { opacity: 0 }
-      : { opacity: 0, y: 42, scale: 0.86, rotateX: 38, filter: "blur(10px)" },
-    show: prefersReducedMotion
-      ? { opacity: 1, transition: { duration: 0.24 } }
-      : {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotateX: 0,
-          filter: "blur(0px)",
-          transition: { duration: 0.8, ease: [0.19, 1, 0.22, 1] }
-        }
-  };
-
   return (
     <section ref={ref} className="relative bg-custom-black z-10 min-h-screen flex items-center py-6 md:py-8 px-4 md:px-6">
       <div className="max-w-6xl mx-auto w-full flex flex-col items-center gap-6 md:gap-9">
-        <div className="relative [perspective:1500px]">
+        <div ref={projectTitleRef} className="relative [perspective:1500px]">
           <motion.div
             aria-hidden="true"
             className="pointer-events-none absolute left-1/2 top-1/2 h-24 w-[min(78vw,560px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,176,240,0.48)_0%,rgba(0,176,240,0.18)_40%,rgba(0,176,240,0)_74%)] blur-2xl"
@@ -685,26 +654,23 @@ function PerspectiveZoomPhrase() {
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: prefersReducedMotion ? 0.4 : 1.1, ease: [0.16, 1, 0.3, 1] }}
           />
-          <motion.p
-            variants={projectTitleContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.52 }}
-            className="relative text-center font-montserrat font-black tracking-tight text-3xl md:text-5xl leading-[0.95] [transform-style:preserve-3d]"
+          <motion.h2
+            style={{ scale: projectTitleScale, opacity: projectTitleOpacity }}
+            className="relative w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,14rem)]"
           >
             <motion.span
-              variants={projectTitleLine}
-              className="block text-sand [text-shadow:0_14px_36px_rgba(0,0,0,0.38)]"
+              style={{ x: projetosX }}
+              className="block text-custom-blue will-change-transform whitespace-nowrap"
             >
               Projetos
             </motion.span>
             <motion.span
-              variants={projectTitleLine}
-              className="block text-custom-blue [text-shadow:0_0_30px_rgba(0,176,240,0.5)]"
+              style={{ x: recentesX }}
+              className="block text-sand will-change-transform whitespace-nowrap"
             >
               Recentes
             </motion.span>
-          </motion.p>
+          </motion.h2>
         </div>
 
         <motion.div
@@ -978,7 +944,7 @@ function Testimonials() {
       role: "Gerente Financeira"
     },
     {
-      text: "A Fooca foi crucial na entrega e no desenvolvimento do projeto.\nUm bom site sempre é construído a quatro mãos, e quem é da área sabe que ele passa por diversas mudanças ao longo do processo.\nEm cada etapa, houve troca, ajuste e evolução. O pessoal da agência cumpriu o combinado com muita dedicação e parceria. No fim, isso fez toda a diferença no resultado entregue.",
+      text: "A Focca foi crucial na entrega e no desenvolvimento do projeto.\nUm bom site sempre é construído a quatro mãos, e quem é da área sabe que ele passa por diversas mudanças ao longo do processo.\nEm cada etapa, houve troca, ajuste e evolução. O pessoal da agência cumpriu o combinado com muita dedicação e parceria. No fim, isso fez toda a diferença no resultado entregue.",
       author: "Fernando Castellon",
       role: "Gerente Projetos do Grupo H2"
     }
@@ -1037,7 +1003,7 @@ const TestimonialCard: React.FC<{
       transition={{ duration: 0.8 }}
       className="relative"
     >
-      <h3 className="testimonial-quote text-2xl md:text-4xl font-bold leading-tight relative z-10 mb-12">
+      <h3 className="testimonial-quote text-xl sm:text-2xl md:text-4xl font-bold leading-tight relative z-10 mb-12">
         <ProgressiveText text={t.text} progress={smoothProgress} />
       </h3>
       <div className="flex items-center gap-6">

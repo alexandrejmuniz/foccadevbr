@@ -114,7 +114,7 @@ const MOBILE_VIEWBOX_WIDTH = 420;
 const MOBILE_CENTER_X = MOBILE_VIEWBOX_WIDTH / 2;
 const MOBILE_TOP_PADDING = 95;
 const MOBILE_STEP_Y = 332;
-const MOBILE_CURVE_SWAY = 48;
+const MOBILE_CURVE_SWAY = 30;
 const MOBILE_BOTTOM_PADDING = 120;
 
 const buildPath = (nodes: TimelineNodeData[]) => {
@@ -342,7 +342,7 @@ const MobileTimelineNode: FC<{
   const cardX = useTransform(progress, [start, end], [node.side === 'left' ? 16 : -16, 0]);
   const imageOpacity = useTransform(progress, [start, end], [0.75, 1]);
   const imageY = useTransform(progress, [start, end], [16, 0]);
-  const imageX = useTransform(progress, [start, end], [node.side === 'left' ? 14 : -14, 0]);
+  const imageX = useTransform(progress, [start, end], [node.side === 'left' ? 8 : -8, 0]);
   const imageScale = useTransform(progress, [start, end], [0.88, 1]);
   const shouldHalfImage = node.imageKey === '2001a2009' || node.imageKey === '2015' || node.imageKey === '2005';
   const isCelebrationLogo2024 = node.imageKey === '2024';
@@ -376,9 +376,9 @@ const MobileTimelineNode: FC<{
   const mobileImageWidth = shouldHalfImage
     ? 'min(24vw, 96px)'
     : isCelebrationLogo2024
-      ? 'min(44vw, 190px)'
+      ? 'min(34vw, 120px)'
       : node.imageKey === '2016-1'
-        ? 'min(40vw, 172px)'
+        ? 'min(35vw, 122px)'
         : 'min(33vw, 142px)';
 
   return (
