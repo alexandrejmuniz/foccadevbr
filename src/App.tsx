@@ -1125,7 +1125,7 @@ function Footer() {
 
   return (
     <footer ref={footerRef} id="footer" className="min-h-screen bg-custom-blue relative overflow-hidden px-6 py-20 text-center z-10">
-      <FooterMatterPills className="hidden md:block absolute inset-0 z-0" />
+      <FooterMatterPills className="absolute inset-0 z-0" />
       <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(circle_at_50%_12%,rgba(255,255,255,0.34),rgba(255,255,255,0.10)_34%,rgba(255,255,255,0.00)_68%)]" />
       <a
         href="#top"
