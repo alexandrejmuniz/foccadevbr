@@ -20,104 +20,132 @@ type TimelineNodeData = TimelineEntry & {
 const timelineData: TimelineEntry[] = [
   {
     id: 1,
+    year: '2000',
+    text: 'Estreio na area de desenvolvimento de sistemas da Ogilvy Interactive. Primeira experiencia em comunicacao com contas de respeito: Intel, Coca-Cola, BankBoston e Amex.',
+    media: 'logo',
+    imageKey: '2000'
+  },
+  {
+    id: 2,
+    year: '2001 a 2009',
+    text: "Respondi pela area de infraestrutura e desenvolvimento da The Marketing Store Worldwide, dando suporte aos escritorios da America Latina e a clientes como McDonald's, Ambev, Diageo, Cosan, Unilever e muitos outros. Aqui desenhei, desenvolvi e geri meus primeiros produtos digitais: portais, intranets, sistemas de gestao e muito mais.",
+    media: 'foto',
+    imageKey: '2001a2009'
+  },
+  {
+    id: 3,
     year: '2006',
     text: 'Bacharelado em Sistemas de Informacao.',
     media: 'logo',
     imageKey: 'placeholder-2006'
   },
   {
-    id: 2,
+    id: 4,
     year: '2007',
     text: 'Na SAVOIR fui Programador Senior e Coordenador de Equipe de desenvolvimento. Coordenei e supervisionei equipes de sistemas com utilizacao de alta tecnologia, da avaliacao e identificacao de solucoes tecnicas ao planejamento e entendimento das necessidades do negocio e dos clientes. Aplicando PHP, React, C#, Python, Java, .NET, Docker, Apps, DevOps, cloud computing, conectores de BI e SQL, entre outros.',
     media: 'foto',
     imageKey: 'placeholder-2007-savoir'
   },
   {
-    id: 3,
+    id: 5,
     year: '2007',
     text: 'Superior em Desenvolvimento de Bancos de Dados.',
     media: 'logo',
     imageKey: 'placeholder-2007-db'
   },
   {
-    id: 4,
+    id: 6,
     year: '2009',
     text: 'Dirigi o desenvolvimento de software embarcado na maquina de retornaveis da Ambev, um projeto bem a frente do seu tempo.',
     media: 'foto',
     imageKey: '2009'
   },
   {
-    id: 5,
+    id: 7,
     year: '2010',
     text: 'Projetei, desenvolvi e geri um dos maiores catalogos de premios do mercado para incentivos, alem de campanhas monumentais para Mercedes-Benz, Raizen, Diageo e outros gigantes.',
     media: 'foto',
     imageKey: '2010'
   },
   {
-    id: 6,
+    id: 8,
     year: '2012',
     text: 'Tive o prazer de atender projetos e desafios tecnicos e inovadores como os sites da C&A, Renault, Troller, Pedigree e ativacoes premiadas para a Almap BBDO, AfricaCreative e LewLaraTBWA.',
     media: 'foto',
     imageKey: 'placeholder-2012'
   },
   {
-    id: 7,
+    id: 9,
     year: '2013',
     text: 'A frente da area de infraestrutura e sistemas internos das 6 agencias da Holding Club e, entre uma implantacao de ERP e outra de sistemas internos, ainda pude fazer otimos amigos.',
     media: 'logo',
     imageKey: '2013'
   },
   {
-    id: 8,
+    id: 10,
     year: '2015',
     text: 'Primeira diretoria operacional, de eventos e sistemas da Tangran, onde, entre outros clientes, atendemos LATAM, Philip Morris e Gomes da Costa.',
     media: 'foto',
     imageKey: '2015'
   },
   {
-    id: 9,
+    id: 11,
     year: '2015',
     text: 'Certificado pelo IBOPE \\o/',
     media: 'logo',
     imageKey: 'placeholder-2015-ibope'
   },
   {
-    id: 10,
+    id: 12,
     year: '2016',
-    text: 'MBA - Gestao de Projetos de TI.',
+    text: 'Nasce, da paixao de dois colegas de trabalho por arte e design, a "Varal Store", um marketplace de decoracao e acessorios, focado em uma forte curadoria de novos designs e produtos unicos.',
     media: 'foto',
     imageKey: '2016'
   },
   {
-    id: 11,
+    id: 18,
+    year: '2016',
+    text: 'Espalhei diversao na Pascoa em forma de games para os produtos Lacta/Mondelez, unindo experiencias on e off e quatro licenciamentos incriveis.',
+    media: 'fotos',
+    imageKey: '2016-1'
+  },
+  {
+    id: 19,
+    year: '2016',
+    text: 'MBA - Gestao de Projetos de TI.',
+    media: 'logo',
+    imageKey: 'placeholder-2016-mba'
+  },
+  {
+    id: 13,
     year: '2019',
     text: 'Construimos a primeira plataforma de incentivo automatizada e personalizavel aplicada inicialmente para a Ajinomoto. Deste projeto surgiram inumeras oportunidades e clientes, alem de um programa com mais de 6 anos no ar.',
     media: 'tela',
     imageKey: '2019'
   },
   {
-    id: 12,
+    id: 14,
     year: '2022',
     text: 'Um novo desafio! Desta vez, uma plataforma promocional completa, tambem personalizavel, robusta e agil, aplicada para Brastemp e Consul, com as primeiras promocoes de cashback real pagos via Pix. Hoje a plataforma ja evoluiu muito e atendeu a mais de 130 promocoes e diversos clientes.',
     media: 'foto',
     imageKey: '2022'
   },
   {
-    id: 13,
+    id: 15,
     year: '2022',
     text: 'DIGISYSTEM - Arquiteto de Software Master. Defino padroes tecnicos em projetos de desenvolvimentos complexos, desde a sua arquitetura ate a validacao de qualidade dos codigos e solucoes aplicados. Realizando tambem a gestao de equipe de diversos programadores em inumeras linguagens. Em sua maioria sao projetos governamentais, voltados para diversas areas, de educacao superior ate cultura, passando por qualquer demanda onde exista a necessidade de uma entrega precisa, organizada, agil e seguindo melhores praticas de mercado.',
     media: 'logo',
     imageKey: 'placeholder-2022-digisystem'
   },
   {
-    id: 14,
+    id: 16,
     year: '2024',
     text: 'Focca e oficial! Nasce a partir da indignacao de dois profissionais experientes e versateis, que acreditam que a tecnologia pode ser sim, uma ferramenta de encantamento, e tambem trazer agilidade, escalabilidade e resultados impares aos negocios.',
     media: 'logo',
     imageKey: '2024'
   },
   {
-    id: 15,
+    id: 17,
     year: '2025',
     text: 'A jornada continua...\nUma plataforma de reconhecimento de imagens em tempo real para a Coca-Cola, a revitalizacao de um sistema complexo de pagamentos via Pix online, e a construcao de um sistema sofisticado de publicacoes de resultados para atrair investidores de uma das maiores bets do mercado.',
     media: 'foto',
@@ -179,6 +207,16 @@ const DesktopTimelineNode: FC<{
   const imageScale = useTransform(progress, [start, end], [0.93, 1]);
   const shouldHalfImage = node.imageKey === '2001a2009' || node.imageKey === '2015' || node.imageKey === '2005';
   const isCelebrationLogo2024 = node.imageKey === '2024';
+  const isGraduationImage =
+    node.imageKey === 'placeholder-2006' ||
+    node.imageKey === 'placeholder-2007-db' ||
+    node.imageKey === 'placeholder-2016-mba';
+  const isSavoir2007Image = node.imageKey === 'placeholder-2007-savoir';
+  const is2009Image = node.imageKey === '2009';
+  const is2010Image = node.imageKey === '2010';
+  const is2016Image = node.imageKey === '2016';
+  const is2022Image = node.imageKey === '2022';
+  const is2015IbopeImage = node.imageKey === 'placeholder-2015-ibope';
   const celebrationIntroPeak = Math.min(1, start + 0.08);
   const celebrationIntroSettle = Math.min(1, start + 0.2);
   const celebrationImageOpacity = useTransform(
@@ -212,6 +250,20 @@ const DesktopTimelineNode: FC<{
       : node.id % 3 === 1
         ? 'min(8.3vw, 120px)'
         : 'min(9.5vw, 136px)'
+    : isGraduationImage
+      ? 'min(14vw, 200px)'
+    : isSavoir2007Image
+      ? 'min(8.6vw, 124px)'
+    : is2009Image
+      ? 'min(16.6vw, 238px)'
+    : is2010Image
+      ? 'min(14.8vw, 212px)'
+    : is2016Image
+      ? 'min(10.4vw, 150px)'
+    : is2022Image
+      ? 'min(17.5vw, 252px)'
+    : is2015IbopeImage
+      ? 'min(9.5vw, 137px)'
     : isCelebrationLogo2024
       ? 'min(29vw, 430px)'
       : node.imageKey === '2016-1'
@@ -277,7 +329,9 @@ const DesktopTimelineNode: FC<{
           className={`relative rounded-2xl ${
             isCelebrationLogo2024
               ? 'overflow-visible bg-transparent shadow-none p-3 lg:p-4'
-              : 'overflow-hidden bg-[#0f0f10] border border-custom-blue/40 shadow-[0_20px_45px_rgba(0,0,0,0.5)]'
+              : `overflow-hidden bg-[#0f0f10] border border-custom-blue/40 shadow-[0_20px_45px_rgba(0,0,0,0.5)] ${
+                  isGraduationImage ? 'p-3 lg:p-4' : ''
+                }`
           }`}
           animate={
             prefersReducedMotion
@@ -313,7 +367,9 @@ const DesktopTimelineNode: FC<{
             alt={`${node.year} - ${node.media}`}
             loading="lazy"
             decoding="async"
-            className={`w-full h-auto block ${isCelebrationLogo2024 ? 'relative z-10' : ''}`}
+            className={`w-full h-auto block ${isCelebrationLogo2024 ? 'relative z-10' : ''} ${
+              isGraduationImage ? 'rounded-lg' : ''
+            }`}
           />
           {isCelebrationLogo2024 && (
             <>
@@ -367,6 +423,16 @@ const MobileTimelineNode: FC<{
   const imageScale = useTransform(progress, [start, end], [0.88, 1]);
   const shouldHalfImage = node.imageKey === '2001a2009' || node.imageKey === '2015' || node.imageKey === '2005';
   const isCelebrationLogo2024 = node.imageKey === '2024';
+  const isGraduationImage =
+    node.imageKey === 'placeholder-2006' ||
+    node.imageKey === 'placeholder-2007-db' ||
+    node.imageKey === 'placeholder-2016-mba';
+  const isSavoir2007Image = node.imageKey === 'placeholder-2007-savoir';
+  const is2009Image = node.imageKey === '2009';
+  const is2010Image = node.imageKey === '2010';
+  const is2016Image = node.imageKey === '2016';
+  const is2022Image = node.imageKey === '2022';
+  const is2015IbopeImage = node.imageKey === 'placeholder-2015-ibope';
   const celebrationIntroPeak = Math.min(1, start + 0.11);
   const celebrationIntroSettle = Math.min(1, start + 0.24);
   const celebrationImageOpacity = useTransform(
@@ -396,6 +462,20 @@ const MobileTimelineNode: FC<{
   const celebrationFlashOpacity = useTransform(progress, [start, celebrationIntroPeak, celebrationIntroSettle], [0.84, 0.14, 0]);
   const mobileImageWidth = shouldHalfImage
     ? 'min(24vw, 96px)'
+    : isGraduationImage
+      ? 'min(27vw, 118px)'
+    : isSavoir2007Image
+      ? 'min(15vw, 64px)'
+    : is2009Image
+      ? 'min(27vw, 116px)'
+    : is2010Image
+      ? 'min(25vw, 108px)'
+    : is2016Image
+      ? 'min(16.5vw, 71px)'
+    : is2022Image
+      ? 'min(30vw, 128px)'
+    : is2015IbopeImage
+      ? 'min(16.5vw, 71px)'
     : isCelebrationLogo2024
       ? 'min(34vw, 120px)'
       : node.imageKey === '2016-1'
@@ -457,7 +537,9 @@ const MobileTimelineNode: FC<{
           className={`relative rounded-xl ${
             isCelebrationLogo2024
               ? 'overflow-visible bg-transparent shadow-none p-2'
-              : 'overflow-hidden bg-[#0f0f10] border border-custom-blue/40 shadow-[0_14px_28px_rgba(0,0,0,0.45)]'
+              : `overflow-hidden bg-[#0f0f10] border border-custom-blue/40 shadow-[0_14px_28px_rgba(0,0,0,0.45)] ${
+                  isGraduationImage ? 'p-2' : ''
+                }`
           }`}
           animate={
             prefersReducedMotion
@@ -493,7 +575,9 @@ const MobileTimelineNode: FC<{
             alt={`${node.year} - ${node.media}`}
             loading="lazy"
             decoding="async"
-            className={`w-full h-auto block ${isCelebrationLogo2024 ? 'relative z-10' : ''}`}
+            className={`w-full h-auto block ${isCelebrationLogo2024 ? 'relative z-10' : ''} ${
+              isGraduationImage ? 'rounded-md' : ''
+            }`}
           />
           {isCelebrationLogo2024 && (
             <>
@@ -521,15 +605,19 @@ const MobileTimelineNode: FC<{
 export default function TimelineSection() {
   const timelineImage = new URL('../../img/timeline.png', import.meta.url).href;
   const imageByYear: Record<string, string> = {
-    'placeholder-2006': new URL('../../img/timeline/placeholder.svg', import.meta.url).href,
+    '2000': new URL('../../img/timeline/2000.jpg', import.meta.url).href,
+    '2001a2009': new URL('../../img/timeline/2001a2009.jpg', import.meta.url).href,
+    'placeholder-2006': new URL('../../img/timeline/graduacao.png', import.meta.url).href,
     'placeholder-2007-savoir': new URL('../../img/timeline/2007.png', import.meta.url).href,
-    'placeholder-2007-db': new URL('../../img/timeline/2007.png', import.meta.url).href,
+    'placeholder-2007-db': new URL('../../img/timeline/graduacao.png', import.meta.url).href,
+    'placeholder-2016-mba': new URL('../../img/timeline/graduacao.png', import.meta.url).href,
     '2009': new URL('../../img/timeline/2009.jpg', import.meta.url).href,
     '2010': new URL('../../img/timeline/2010.png', import.meta.url).href,
     'placeholder-2012': new URL('../../img/timeline/2012.jpg', import.meta.url).href,
     '2013': new URL('../../img/timeline/2013.jpg', import.meta.url).href,
     '2015': new URL('../../img/timeline/2015.jpg', import.meta.url).href,
     '2016': new URL('../../img/timeline/2016.jpg', import.meta.url).href,
+    '2016-1': new URL('../../img/timeline/2016-1.jpg', import.meta.url).href,
     'placeholder-2015-ibope': new URL('../../img/timeline/2015-ibope.jpg', import.meta.url).href,
     '2019': new URL('../../img/timeline/2019.jpg', import.meta.url).href,
     '2022': new URL('../../img/timeline/2022.jpg', import.meta.url).href,
