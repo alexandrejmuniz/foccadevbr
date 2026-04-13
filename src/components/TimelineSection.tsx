@@ -20,85 +20,106 @@ type TimelineNodeData = TimelineEntry & {
 const timelineData: TimelineEntry[] = [
   {
     id: 1,
-    year: '2000',
-    text: 'Estreio na área de desenvolvimento de sistemas da Ogilvy Interactive. Primeira experiência em comunicação com contas de respeito: Intel, Coca-Cola, BankBoston e Amex.',
+    year: '2006',
+    text: 'Bacharelado em Sistemas de Informacao.',
     media: 'logo',
-    imageKey: '2000'
+    imageKey: 'placeholder-2006'
   },
   {
     id: 2,
-    year: '2001 a 2009',
-    text: "Respondi pela área de infraestrutura e desenvolvimento da The Marketing Store Worldwide, dando suporte aos escritórios da América Latina e a clientes como McDonald's, Ambev, Diageo, Cosan, Unilever e muitos outros. Aqui desenhei, desenvolvi e geri meus primeiros produtos digitais: portais, intranets, sistemas de gestão e muito mais.",
+    year: '2007',
+    text: 'Na SAVOIR fui Programador Senior e Coordenador de Equipe de desenvolvimento. Coordenei e supervisionei equipes de sistemas com utilizacao de alta tecnologia, da avaliacao e identificacao de solucoes tecnicas ao planejamento e entendimento das necessidades do negocio e dos clientes. Aplicando PHP, React, C#, Python, Java, .NET, Docker, Apps, DevOps, cloud computing, conectores de BI e SQL, entre outros.',
     media: 'foto',
-    imageKey: '2001a2009'
+    imageKey: 'placeholder-2007-savoir'
   },
   {
     id: 3,
+    year: '2007',
+    text: 'Superior em Desenvolvimento de Bancos de Dados.',
+    media: 'logo',
+    imageKey: 'placeholder-2007-db'
+  },
+  {
+    id: 4,
     year: '2009',
-    text: 'Dirigi o desenvolvimento de software embarcado na máquina de retornáveis da Ambev, um projeto bem à frente do seu tempo.',
+    text: 'Dirigi o desenvolvimento de software embarcado na maquina de retornaveis da Ambev, um projeto bem a frente do seu tempo.',
     media: 'foto',
     imageKey: '2009'
   },
   {
-    id: 4,
+    id: 5,
     year: '2010',
-    text: 'Desenhei, desenvolvi e geri um dos maiores catálogos de prêmios do mercado para incentivos, além de campanhas monumentais para Mercedes-Benz, Raízen, Diageo e outros gigantes.',
+    text: 'Projetei, desenvolvi e geri um dos maiores catalogos de premios do mercado para incentivos, alem de campanhas monumentais para Mercedes-Benz, Raizen, Diageo e outros gigantes.',
     media: 'foto',
     imageKey: '2010'
   },
   {
-    id: 5,
+    id: 6,
+    year: '2012',
+    text: 'Tive o prazer de atender projetos e desafios tecnicos e inovadores como os sites da C&A, Renault, Troller, Pedigree e ativacoes premiadas para a Almap BBDO, AfricaCreative e LewLaraTBWA.',
+    media: 'foto',
+    imageKey: 'placeholder-2012'
+  },
+  {
+    id: 7,
     year: '2013',
-    text: 'Respondi pela área de infraestrutura e sistemas internos das 6 agências da holding Club, e, entre uma implantação de ERP e outra de sistemas internos, ainda pude fazer ótimos amigos.',
+    text: 'A frente da area de infraestrutura e sistemas internos das 6 agencias da Holding Club e, entre uma implantacao de ERP e outra de sistemas internos, ainda pude fazer otimos amigos.',
     media: 'logo',
     imageKey: '2013'
   },
   {
-    id: 6,
+    id: 8,
     year: '2015',
-    text: 'Atuei na diretoria operacional, de eventos e sistemas da Tangran, onde, entre outros clientes, atendemos LATAM, Philip Morris e Gomes da Costa. Foi também onde conheci minha primeira sócia, da Varal Store, e grande amiga de projetos ousados e inovadores.',
+    text: 'Primeira diretoria operacional, de eventos e sistemas da Tangran, onde, entre outros clientes, atendemos LATAM, Philip Morris e Gomes da Costa.',
     media: 'foto',
     imageKey: '2015'
   },
   {
-    id: 7,
+    id: 9,
+    year: '2015',
+    text: 'Certificado pelo IBOPE \\o/',
+    media: 'logo',
+    imageKey: 'placeholder-2015-ibope'
+  },
+  {
+    id: 10,
     year: '2016',
-    text: 'Nasce, da paixão de dois colegas de trabalho por arte e design, a “Varal Store”, um marketplace de decoração e acessórios, focado em uma forte curadoria de novos designs e produtos únicos.',
+    text: 'MBA - Gestao de Projetos de TI.',
     media: 'foto',
     imageKey: '2016'
   },
   {
-    id: 8,
-    year: '2016',
-    text: 'Espalhei diversão na Páscoa em forma de games para os produtos Lacta/Mondelez, unindo experiências on e off e quatro licenciamentos incríveis.',
-    media: 'fotos',
-    imageKey: '2016-1'
-  },
-  {
-    id: 9,
+    id: 11,
     year: '2019',
-    text: 'Nasce a primeira plataforma de incentivo desenhada por mim para a Ajinomoto. Deste projeto surgiram inúmeras oportunidades e um programa com mais de 6 anos no ar.',
+    text: 'Construimos a primeira plataforma de incentivo automatizada e personalizavel aplicada inicialmente para a Ajinomoto. Deste projeto surgiram inumeras oportunidades e clientes, alem de um programa com mais de 6 anos no ar.',
     media: 'tela',
     imageKey: '2019'
   },
   {
-    id: 10,
+    id: 12,
     year: '2022',
-    text: 'Estreia um novo desafio: desta vez, uma plataforma promocional completa, robusta e ágil para Brastemp e Consul, com as primeiras promoções de cashback real pago via Pix no mercado.',
+    text: 'Um novo desafio! Desta vez, uma plataforma promocional completa, tambem personalizavel, robusta e agil, aplicada para Brastemp e Consul, com as primeiras promocoes de cashback real pagos via Pix. Hoje a plataforma ja evoluiu muito e atendeu a mais de 130 promocoes e diversos clientes.',
     media: 'foto',
     imageKey: '2022'
   },
   {
-    id: 11,
+    id: 13,
+    year: '2022',
+    text: 'DIGISYSTEM - Arquiteto de Software Master. Defino padroes tecnicos em projetos de desenvolvimentos complexos, desde a sua arquitetura ate a validacao de qualidade dos codigos e solucoes aplicados. Realizando tambem a gestao de equipe de diversos programadores em inumeras linguagens. Em sua maioria sao projetos governamentais, voltados para diversas areas, de educacao superior ate cultura, passando por qualquer demanda onde exista a necessidade de uma entrega precisa, organizada, agil e seguindo melhores praticas de mercado.',
+    media: 'logo',
+    imageKey: 'placeholder-2022-digisystem'
+  },
+  {
+    id: 14,
     year: '2024',
-    text: 'Nasce a Focca. A partir da indignação de dois profissionais experientes e versáteis, que acreditam que a tecnologia pode ser, sim, uma ferramenta de encantamento para quem usa, além de trazer agilidade, escalabilidade e resultados ímpares aos clientes.',
+    text: 'Focca e oficial! Nasce a partir da indignacao de dois profissionais experientes e versateis, que acreditam que a tecnologia pode ser sim, uma ferramenta de encantamento, e tambem trazer agilidade, escalabilidade e resultados impares aos negocios.',
     media: 'logo',
     imageKey: '2024'
   },
   {
-    id: 12,
+    id: 15,
     year: '2025',
-    text: 'Um misto de projetos incríveis: desde uma plataforma de reconhecimento de imagens em tempo real para a Coca-Cola, passando pela revitalização de um sistema crítico de pagamentos Pix online, até um sistema sofisticado de publicações de resultados para angariar investidores de uma das maiores bets do mercado.',
+    text: 'A jornada continua...\nUma plataforma de reconhecimento de imagens em tempo real para a Coca-Cola, a revitalizacao de um sistema complexo de pagamentos via Pix online, e a construcao de um sistema sofisticado de publicacoes de resultados para atrair investidores de uma das maiores bets do mercado.',
     media: 'foto',
     imageKey: '2025'
   }
@@ -500,16 +521,19 @@ const MobileTimelineNode: FC<{
 export default function TimelineSection() {
   const timelineImage = new URL('../../img/timeline.png', import.meta.url).href;
   const imageByYear: Record<string, string> = {
-    '2000': new URL('../../img/timeline/2000.jpg', import.meta.url).href,
-    '2001a2009': new URL('../../img/timeline/2001a2009.jpg', import.meta.url).href,
+    'placeholder-2006': new URL('../../img/timeline/placeholder.svg', import.meta.url).href,
+    'placeholder-2007-savoir': new URL('../../img/timeline/2007.png', import.meta.url).href,
+    'placeholder-2007-db': new URL('../../img/timeline/2007.png', import.meta.url).href,
     '2009': new URL('../../img/timeline/2009.jpg', import.meta.url).href,
     '2010': new URL('../../img/timeline/2010.png', import.meta.url).href,
+    'placeholder-2012': new URL('../../img/timeline/2012.jpg', import.meta.url).href,
     '2013': new URL('../../img/timeline/2013.jpg', import.meta.url).href,
     '2015': new URL('../../img/timeline/2015.jpg', import.meta.url).href,
     '2016': new URL('../../img/timeline/2016.jpg', import.meta.url).href,
-    '2016-1': new URL('../../img/timeline/2016-1.jpg', import.meta.url).href,
+    'placeholder-2015-ibope': new URL('../../img/timeline/2015-ibope.jpg', import.meta.url).href,
     '2019': new URL('../../img/timeline/2019.jpg', import.meta.url).href,
     '2022': new URL('../../img/timeline/2022.jpg', import.meta.url).href,
+    'placeholder-2022-digisystem': new URL('../../img/timeline/2022-digisystem.jpg', import.meta.url).href,
     '2024': new URL('../../img/timeline/2024.png', import.meta.url).href,
     '2025': new URL('../../img/timeline/2025.jpg', import.meta.url).href
   };
@@ -597,7 +621,7 @@ export default function TimelineSection() {
         >
           <motion.img
             src={timelineImage}
-            alt="Prévia da timeline"
+            alt="Previa da timeline"
             className="mx-auto w-full h-auto"
             animate={
               prefersReducedMotion
@@ -699,3 +723,4 @@ export default function TimelineSection() {
     </section>
   );
 }
+

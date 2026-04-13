@@ -53,9 +53,9 @@ function Hero() {
   }, []);
 
   const heroLines = [
-    { text: "Nós construímos sistemas para que se tornem", color: "#C4B9A5" },
-    { text: "ferramenta de encantamento", color: "#00b0f0" },
-    { text: "para a audiência dos nossos clientes, e assim, ajudamos os", color: "#C4B9A5" },
+    { text: "Nós construímos sistemas para que", color: "#C4B9A5" },
+    { text: "encantem", color: "#00b0f0" },
+    { text: "a audiência dos nossos clientes, e assim, nós ajudamos os", color: "#C4B9A5" },
     { text: "", color: "#00b0f0" },
     { text: "a serem mais", color: "#C4B9A5" },
     { text: "visíveis e relevantes", color: "#00b0f0" }
@@ -681,7 +681,7 @@ function PerspectiveZoomPhrase() {
           />
           <motion.h2
             style={{ scale: projectTitleScale, opacity: projectTitleOpacity }}
-            className="relative w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,14rem)]"
+            className="relative w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,182px)]"
           >
             <motion.span
               style={{ x: projetosX }}
@@ -974,7 +974,7 @@ function Testimonials() {
       role: "Gerente Financeira"
     },
     {
-      text: "A Focca foi crucial na entrega e no desenvolvimento do projeto.\nUm bom site sempre é construído a quatro mãos, e quem é da área sabe que ele passa por diversas mudanças ao longo do processo.\nEm cada etapa, houve troca, ajuste e evolução. O pessoal da agência cumpriu o combinado com muita dedicação e parceria. No fim, isso fez toda a diferença no resultado entregue.",
+      text: "A Foc  ca foi crucial na entrega e no desenvolvimento do projeto.\nUm bom site sempre é construído a quatro mãos, e quem é da área sabe que ele passa por diversas mudanças ao longo do processo.\nEm cada etapa, houve troca, ajuste e evolução. O pessoal da agência cumpriu o combinado com muita dedicação e parceria. No fim, isso fez toda a diferença no resultado entregue.",
       author: "Fernando Castellon",
       role: "Gerente Projetos do Grupo H2"
     }
@@ -986,7 +986,7 @@ function Testimonials() {
         <div className="sticky top-0 h-[50vh] md:h-screen overflow-hidden flex items-center justify-center px-4">
           <motion.h2
             style={{ scale: titleScale, opacity: titleOpacity }}
-            className="w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,14rem)]"
+            className="w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,182px)]"
           >
             <motion.span style={{ x: algunsX }} className="block text-custom-blue will-change-transform whitespace-nowrap">
               Alguns
