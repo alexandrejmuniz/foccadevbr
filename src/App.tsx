@@ -668,30 +668,25 @@ function PerspectiveZoomPhrase() {
     setIsPaused(false);
   };
   return (
-    <section ref={ref} className="relative bg-custom-black z-10 min-h-screen flex items-center py-6 md:py-8 px-4 md:px-6">
+    <section ref={ref} className="relative bg-custom-black z-10 min-h-screen flex items-center py-6 md:py-8 px-4 md:px-6 overflow-x-hidden">
       <div className="max-w-6xl mx-auto w-full flex flex-col items-center gap-6 md:gap-9">
-        <div ref={projectTitleRef} className="relative [perspective:1500px]">
-          <motion.div
-            aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-1/2 h-24 w-[min(78vw,560px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,176,240,0.48)_0%,rgba(0,176,240,0.18)_40%,rgba(0,176,240,0)_74%)] blur-2xl"
-            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.28 }}
-            whileInView={prefersReducedMotion ? { opacity: 0.45 } : { opacity: 0.92, scale: 1.18 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ duration: prefersReducedMotion ? 0.4 : 1.1, ease: [0.16, 1, 0.3, 1] }}
-          />
+        <div
+          ref={projectTitleRef}
+          className="relative w-full overflow-hidden [perspective:1500px] flex items-center justify-center px-4 min-h-[150px] sm:min-h-[180px] md:min-h-[280px]"
+        >
           <motion.h2
             style={{ scale: projectTitleScale, opacity: projectTitleOpacity }}
-            className="relative w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,182px)]"
+            className="relative w-full max-w-full overflow-hidden text-center font-black tracking-tight leading-[0.78] text-[clamp(2.4rem,12.5vw,152px)]"
           >
             <motion.span
               style={{ x: projetosX }}
-              className="block text-custom-blue will-change-transform whitespace-nowrap"
+              className="block text-custom-blue will-change-transform"
             >
               Projetos
             </motion.span>
             <motion.span
               style={{ x: recentesX }}
-              className="block text-sand will-change-transform whitespace-nowrap"
+              className="block text-sand will-change-transform"
             >
               Recentes
             </motion.span>
@@ -974,24 +969,24 @@ function Testimonials() {
       role: "Gerente Financeira"
     },
     {
-      text: "A Foc  ca foi crucial na entrega e no desenvolvimento do projeto.\nUm bom site sempre é construído a quatro mãos, e quem é da área sabe que ele passa por diversas mudanças ao longo do processo.\nEm cada etapa, houve troca, ajuste e evolução. O pessoal da agência cumpriu o combinado com muita dedicação e parceria. No fim, isso fez toda a diferença no resultado entregue.",
+      text: "A Focca foi crucial na entrega e no desenvolvimento do projeto.\nUm bom site sempre é construído a quatro mãos, e quem é da área sabe que ele passa por diversas mudanças ao longo do processo.\nEm cada etapa, houve troca, ajuste e evolução. O pessoal da agência cumpriu o combinado com muita dedicação e parceria. No fim, isso fez toda a diferença no resultado entregue.",
       author: "Fernando Castellon",
       role: "Gerente Projetos do Grupo H2"
     }
   ];
 
   return (
-    <section className="bg-custom-black relative z-10">
-      <div ref={titleRef} className="relative h-[50vh] md:h-[200vh]">
+    <section className="bg-custom-black relative z-10 overflow-x-hidden">
+      <div ref={titleRef} className="relative h-[50vh] md:h-[80vh]">
         <div className="sticky top-0 h-[50vh] md:h-screen overflow-hidden flex items-center justify-center px-4">
           <motion.h2
             style={{ scale: titleScale, opacity: titleOpacity }}
-            className="w-full text-center font-black tracking-tight leading-[0.78] text-[clamp(3rem,16vw,182px)]"
+            className="relative w-full max-w-full overflow-hidden text-center font-black tracking-tight leading-[0.78] text-[clamp(2.4rem,12.5vw,152px)]"
           >
-            <motion.span style={{ x: algunsX }} className="block text-custom-blue will-change-transform whitespace-nowrap">
+            <motion.span style={{ x: algunsX }} className="block text-custom-blue will-change-transform">
               Alguns
             </motion.span>
-            <motion.span style={{ x: depoimentosX }} className="block text-sand will-change-transform whitespace-nowrap">
+            <motion.span style={{ x: depoimentosX }} className="block text-sand will-change-transform">
               Depoimentos
             </motion.span>
           </motion.h2>
@@ -1216,7 +1211,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-custom-black min-h-screen font-sans selection:bg-custom-blue selection:text-white">
+    <div className="bg-custom-black min-h-screen font-sans selection:bg-custom-blue selection:text-white overflow-x-hidden">
       <Hero />
       <Intro />
       <PerspectiveZoomPhrase />
